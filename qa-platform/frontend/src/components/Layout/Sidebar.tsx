@@ -45,7 +45,7 @@ export default function Layout() {
   return (
     <div className="flex h-screen bg-slate-900 overflow-hidden">
       {/* Sidebar */}
-      <aside className="w-60 flex-shrink-0 bg-slate-800 border-r border-slate-700 flex flex-col">
+      <aside data-testid="sidebar" className="w-60 flex-shrink-0 bg-slate-800 border-r border-slate-700 flex flex-col">
         {/* Logo */}
         <div className="px-6 py-5 border-b border-slate-700">
           <div className="flex items-center gap-3">
@@ -104,6 +104,7 @@ export default function Layout() {
             </div>
           </div>
           <button
+            data-testid="logout-btn"
             onClick={handleLogout}
             className="w-full flex items-center gap-3 px-3 py-2 text-slate-400 hover:text-red-400 hover:bg-red-400/10 rounded-lg transition-colors duration-200 text-sm"
           >

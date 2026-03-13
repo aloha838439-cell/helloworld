@@ -1,6 +1,6 @@
 from sqlalchemy import Column, Integer, String, Text, DateTime, JSON, ForeignKey, Float
 from sqlalchemy.orm import relationship
-from datetime import datetime
+from datetime import datetime, timezone
 from src.models.base import Base
 
 
@@ -17,8 +17,8 @@ class Defect(Base):
     reporter_id = Column(Integer, ForeignKey("users.id"), nullable=True)
     related_features = Column(JSON, default=list)  # List of related feature strings
     embedding = Column(JSON, nullable=True)  # Stored as JSON array of floats
-    created_at = Column(DateTime, default=datetime.utcnow)
-    updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+    created_at = Column(DateTime, default=lambda: datetime.now(timezone.utc))
+    updated_at = Column(DateTime, default=lambda: datetime.now(timezone.utc), onupdate=lambda: datetime.now(timezone.utc))
 
     # Relationships
     reporter_user = relationship("User", back_populates="defects")

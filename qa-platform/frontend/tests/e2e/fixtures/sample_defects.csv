@@ -1,0 +1,4 @@
+title,description,severity,module,status,reporter,related_features
+로그인 실패 버그,올바른 비밀번호 입력 시 로그인 실패,Critical,Login,Open,QA팀,"['auth','session']"
+결제 오류,카드 결제 시 타임아웃 발생,High,Payment,Open,QA팀,"['payment','api']"
+검색 결과 없음,유효한 검색어에도 결과 없음,Medium,Search,Closed,QA팀,"['search','index']"

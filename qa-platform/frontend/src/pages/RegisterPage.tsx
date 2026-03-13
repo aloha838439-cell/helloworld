@@ -56,9 +56,8 @@ export default function RegisterPage() {
         username: formData.username,
         password: formData.password,
       });
-      login(response.access_token, response.user);
-      toast.success(`Welcome, ${response.user.username}! Account created successfully.`);
-      navigate('/dashboard', { replace: true });
+      toast.success(`회원가입 완료! Welcome, ${response.user.username}!`);
+      navigate('/login', { replace: true });
     } catch (err: unknown) {
       const message =
         (err as { response?: { data?: { detail?: string } } })?.response?.data?.detail ||
@@ -101,9 +100,11 @@ export default function RegisterPage() {
           <form onSubmit={handleSubmit} className="space-y-4">
             {/* Email */}
             <div>
-              <label className="block text-sm font-medium text-slate-300 mb-1.5">Email</label>
+              <label htmlFor="email" className="block text-sm font-medium text-slate-300 mb-1.5">Email</label>
               <input
+                id="email"
                 type="email"
+                data-testid="email-input"
                 value={formData.email}
                 onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                 className={`w-full bg-slate-700 border rounded-lg px-3 py-2.5 text-slate-200 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-colors ${
@@ -118,9 +119,11 @@ export default function RegisterPage() {
 
             {/* Username */}
             <div>
-              <label className="block text-sm font-medium text-slate-300 mb-1.5">Username</label>
+              <label htmlFor="username" className="block text-sm font-medium text-slate-300 mb-1.5">Username</label>
               <input
+                id="username"
                 type="text"
+                data-testid="name-input"
                 value={formData.username}
                 onChange={(e) => setFormData({ ...formData, username: e.target.value })}
                 className={`w-full bg-slate-700 border rounded-lg px-3 py-2.5 text-slate-200 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-colors ${
@@ -135,10 +138,12 @@ export default function RegisterPage() {
 
             {/* Password */}
             <div>
-              <label className="block text-sm font-medium text-slate-300 mb-1.5">Password</label>
+              <label htmlFor="password" className="block text-sm font-medium text-slate-300 mb-1.5">Password</label>
               <div className="relative">
                 <input
+                  id="password"
                   type={showPassword ? 'text' : 'password'}
+                  data-testid="password-input"
                   value={formData.password}
                   onChange={(e) => setFormData({ ...formData, password: e.target.value })}
                   className={`w-full bg-slate-700 border rounded-lg px-3 py-2.5 pr-10 text-slate-200 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-colors ${
@@ -179,11 +184,12 @@ export default function RegisterPage() {
 
             {/* Confirm Password */}
             <div>
-              <label className="block text-sm font-medium text-slate-300 mb-1.5">
+              <label htmlFor="confirmPassword" className="block text-sm font-medium text-slate-300 mb-1.5">
                 Confirm Password
               </label>
               <div className="relative">
                 <input
+                  id="confirmPassword"
                   type="password"
                   value={formData.confirmPassword}
                   onChange={(e) => setFormData({ ...formData, confirmPassword: e.target.value })}
@@ -206,6 +212,7 @@ export default function RegisterPage() {
             {/* Submit */}
             <button
               type="submit"
+              data-testid="register-btn"
               disabled={isLoading}
               className="w-full bg-indigo-600 hover:bg-indigo-700 disabled:opacity-50 disabled:cursor-not-allowed text-white font-medium py-2.5 px-4 rounded-lg transition-colors duration-200 flex items-center justify-center gap-2 mt-2"
             >

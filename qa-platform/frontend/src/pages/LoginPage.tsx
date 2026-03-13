@@ -40,7 +40,8 @@ export default function LoginPage() {
     } catch (err: unknown) {
       const message =
         (err as { response?: { data?: { detail?: string } } })?.response?.data?.detail ||
-        'Login failed. Please check your credentials.';
+        '이메일 또는 비밀번호가 올바르지 않습니다.';
+      setErrors({ form: message });
       toast.error(message);
     } finally {
       setIsLoading(false);
@@ -64,11 +65,13 @@ export default function LoginPage() {
           <form onSubmit={handleSubmit} className="space-y-5">
             {/* Email */}
             <div>
-              <label className="block text-sm font-medium text-slate-300 mb-1.5">
+              <label htmlFor="email" className="block text-sm font-medium text-slate-300 mb-1.5">
                 Email address
               </label>
               <input
+                id="email"
                 type="email"
+                data-testid="email-input"
                 value={formData.email}
                 onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                 className={`w-full bg-slate-700 border rounded-lg px-3 py-2.5 text-slate-200 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-colors ${
@@ -85,12 +88,14 @@ export default function LoginPage() {
 
             {/* Password */}
             <div>
-              <label className="block text-sm font-medium text-slate-300 mb-1.5">
+              <label htmlFor="password" className="block text-sm font-medium text-slate-300 mb-1.5">
                 Password
               </label>
               <div className="relative">
                 <input
+                  id="password"
                   type={showPassword ? 'text' : 'password'}
+                  data-testid="password-input"
                   value={formData.password}
                   onChange={(e) => setFormData({ ...formData, password: e.target.value })}
                   className={`w-full bg-slate-700 border rounded-lg px-3 py-2.5 pr-10 text-slate-200 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-colors ${
@@ -113,9 +118,17 @@ export default function LoginPage() {
               )}
             </div>
 
+            {/* API error message */}
+            {errors.form && (
+              <p data-testid="error-message" className="text-sm text-red-400 bg-red-400/10 border border-red-400/20 rounded-lg px-3 py-2">
+                {errors.form}
+              </p>
+            )}
+
             {/* Submit */}
             <button
               type="submit"
+              data-testid="login-btn"
               disabled={isLoading}
               className="w-full bg-indigo-600 hover:bg-indigo-700 disabled:opacity-50 disabled:cursor-not-allowed text-white font-medium py-2.5 px-4 rounded-lg transition-colors duration-200 flex items-center justify-center gap-2"
             >
